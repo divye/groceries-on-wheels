@@ -201,10 +201,40 @@
     </section>
 
     <!--  ========================================================================= -->
+
+
+
+
         <div ng-app="myApp" ng-controller="myCtrl">
+
+          <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <!-- <p>{{message}}</p> -->
+                <div class="" id="modalText">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
             <p>Code: <input type="text" ng-model="postalCode"></p>
             <button onclick="checkCode()">Submit</button>
         </div>
+
+
     <script>
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope) {
@@ -213,21 +243,41 @@
             ];
 
             checkCode = function (postalCode) {
+                var flag = 0;
                 for(var i = 0; i < $scope.codes.length; i++) {
-                    console.log($scope.codes[i]);
+                    if($scope.postalCode == undefined) {
+                        console.log("zero");
+                        document.getElementById('modalText').innerHTML = "Please enter your postal code correctly.";
+                        $('#myModal').modal('show');
+                        return;
 
-                    if($scope.postalCode == $scope.codes[i]) {
-                        console.log("Delivery possible!");
+                    }
+                    else if($scope.postalCode == $scope.codes[i]) {
+                        flag = 1;
                         break;
                     }
                     else {
-                        console.log("Sorry, we are currently not delivering in your area.");
+                        flag = 0;
                     }
                 }
+                console.log(flag);
+                if(flag == 1) {
+                  $scope.message = "Delivery possible";
+                  document.getElementById('modalText').innerHTML = "Your region is covered in our delivery area!";
+                  $('#myModal').modal('show');
+                }
+                else {
+                  $scope.message = "Delivery not possible";
+                  console.log($scope.message);
+                  document.getElementById('modalText').innerHTML = "Sorry, we are currently not delivering in your area!";
+                  $('#myModal').modal('show');
+                }
             }
-
+            console.log($scope.message);
         });
     </script>
+
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
