@@ -242,7 +242,7 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope) {
 
-            //postalCodes from postalCodes.js
+            //postalCodes from postalCode.js
             var postalCodeList = postalCodes.split(/[ ,]+/);
             $scope.codes = postalCodeList;
 
@@ -257,7 +257,7 @@
                         return;
 
                     }
-                    else if($scope.postalCode == $scope.codes[i]) {
+                    else if($scope.postalCode.toUpperCase() == $scope.codes[i]) {
                         flag = 1;
                         break;
                     }
